@@ -1,0 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+*.venv
+
+# IDE settings
+.idea/
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Python package files
+dist/
+build/
+*.egg-info/
+
+# Environment variables
+.env
+*.ini
+*.cfg
+
+# Database files
+*.sqlite3
+*.db
+
+# Kubernetes and Docker
+k8s/
+docker-compose.override.yml
