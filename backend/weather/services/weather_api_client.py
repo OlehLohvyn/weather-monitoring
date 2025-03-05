@@ -19,12 +19,17 @@ class WeatherAPIClient:
 
     def fetch_data(self, endpoint: str, params: dict):
         """Sends a request to WeatherAPI and returns the response."""
-        url = self.BASE_URLS.get(endpoint)
-        if not url:
-            return {"error": "Invalid API endpoint"}
 
-        # Add API key to request parameters
-        params = {"key": self.api_key, **params}
+        # Validate endpoint
+        if not endpoint or endpoint not in self.BASE_URLS:
+            return {"error": "Invalid or missing API endpoint"}
+
+        # Validate parameters
+        if not params or "q" not in params:
+            return {"error": "Missing required parameter(s): q"}
+
+        url = self.BASE_URLS[endpoint]
+        params = {"key": self.api_key, **params}  # Add API key
 
         try:
             response = requests.get(url, params=params)
