@@ -1,10 +1,3 @@
-import os
-import django
-
-# Ініціалізуємо Django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
-django.setup()
-
 from django_celery_beat.models import PeriodicTask, IntervalSchedule
 import json
 
@@ -16,17 +9,17 @@ IntervalSchedule.objects.all().delete()
 
 print("✅ Видалено старі задачі!")
 
-# Створюємо інтервал 10 секунд
+# Створюємо інтервал 1 година
 schedule, created = IntervalSchedule.objects.get_or_create(
-    every=10,
-    period=IntervalSchedule.SECONDS,
+    every=1,
+    period=IntervalSchedule.HOURS,
 )
 
 # Створюємо нову задачу
 task, created = PeriodicTask.objects.get_or_create(
     interval=schedule,
-    name="Повторюване привітання",
-    task="weather.tasks.send_greeting",
+    name="Отримання та збереження погоди",
+    task="weather.tasks.fetch_and_store_weather",
     defaults={"args": json.dumps([])}
 )
 

@@ -141,8 +141,9 @@ WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 # Celery settings
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_BROKER_URL = 'redis://host.docker.internal:6379/0'
-CELERY_RESULT_BACKEND = 'redis://host.docker.internal:6379/0'
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
+DEFAULT_CITY = os.getenv("DEFAULT_CITY", "Kyiv")
 
 
 

@@ -39,3 +39,4 @@ k8s/
 docker-compose.override.yml
 /backend/celerybeat-schedule.bak
 /backend/celerybeat-schedule.dir
+/backend/.coverage
