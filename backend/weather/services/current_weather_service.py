@@ -6,7 +6,7 @@ import logging
 
 
 class CurrentWeatherService:
-    """Сервіс для отримання поточної погоди."""
+    """Service for getting current weather."""
 
     def __init__(self):
         self.api_client = WeatherAPIClient()
