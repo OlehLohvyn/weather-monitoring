@@ -5,13 +5,13 @@ FROM python:3.10
 WORKDIR /app
 
 # Копіюємо файл залежностей
-COPY backend/requirements.txt .
+COPY requirements.txt .
 
 # Встановлюємо залежності
 RUN pip install -r requirements.txt
 
 # Копіюємо весь проєкт у контейнер
-COPY backend /app
+COPY . /app
 
 # Встановлюємо змінну середовища для Django
 ENV PYTHONPATH="/app"
