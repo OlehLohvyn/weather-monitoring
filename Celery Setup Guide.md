@@ -10,6 +10,7 @@ docker-compose down && docker-compose up --build -d
 Щоб зміни набули сили, виконай:
 ```bash
 docker-compose down -v
+
 docker-compose up -d --build
 ```
 

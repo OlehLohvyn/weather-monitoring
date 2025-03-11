@@ -1,6 +1,7 @@
 from django_celery_beat.models import PeriodicTask, IntervalSchedule
 import json
 
+
 def setup_periodic_tasks():
     schedule, created = IntervalSchedule.objects.get_or_create(
         every=1,
