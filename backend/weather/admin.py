@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import WeatherData, WindData, WeatherCondition
+from django_celery_beat.models import PeriodicTask, IntervalSchedule
 
 
 class WeatherDataAdmin(admin.ModelAdmin):
@@ -49,6 +50,9 @@ class WeatherDataAdmin(admin.ModelAdmin):
     weather_condition.admin_order_field = 'condition__weather_condition'
 
 
+# Weather
 admin.site.register(WeatherData, WeatherDataAdmin)
 admin.site.register(WindData)
 admin.site.register(WeatherCondition)
+
+

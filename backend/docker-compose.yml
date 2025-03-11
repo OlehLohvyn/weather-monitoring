@@ -17,7 +17,11 @@ services:
       - DB_PASS=weather_password
       - DB_PORT=5432
     command: >
-      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+      sh -c "
+      python manage.py migrate --fake-initial &&
+      python manage.py migrate django_celery_beat --fake-initial &&
+      python manage.py runserver 0.0.0.0:8000"
+
 
   database:
     image: postgres:14.6-alpine
@@ -47,6 +51,23 @@ services:
     depends_on:
       - redis
       - database
+    environment:
+      - DB_HOST=database
+      - DB_NAME=weather_db
+      - DB_USER=weather_user
+      - DB_PASS=weather_password
+      - DB_PORT=5432
+
+  celery-beat:
+    build: .
+    command: >
+      sh -c "
+      python manage.py migrate django_celery_beat --fake-initial &&
+      celery -A app.celery_app beat --loglevel=info"
+    depends_on:
+      - redis
+      - database
+      - web-app
     environment:
       - DB_HOST=database
       - DB_NAME=weather_db
