@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  database:
+    extends:
+      file: docker/docker-compose.database.yml
+      service: database
+
+  redis:
+    extends:
+      file: docker/docker-compose.redis.yml
+      service: redis
+
+  web-app:
+    extends:
+      file: docker/docker-compose.app.yml
+      service: web-app
+
+  celery-worker:
+    extends:
+      file: docker/docker-compose.celery.yml
+      service: celery-worker
+
+  celery-beat:
+    extends:
+      file: docker/docker-compose.celery.yml
+      service: celery-beat
+
+
+volumes:
+  pg_data:

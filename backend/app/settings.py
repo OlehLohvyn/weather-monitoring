@@ -21,6 +21,8 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from the root .env
+load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -32,7 +34,6 @@ SECRET_KEY = 'django-insecure-j#d6=p@e@u4h0=oi9@$r$jf+$-wi&+y$(p_4udaear^b)v0ylf
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 
 # Application definition
@@ -139,16 +140,17 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Load WEATHER API KEY
-load_dotenv()
+
 WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 
 
-# Налаштування Celery
+# Settings Celery
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
 
 
 
