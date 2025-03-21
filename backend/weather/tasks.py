@@ -1,6 +1,7 @@
-from celery import shared_task
-from datetime import datetime, timedelta
 import datetime
+from datetime import datetime, timedelta
+
+from celery import shared_task
 
 from .models import WeatherData
 from .services.current_weather_service import CurrentWeatherService

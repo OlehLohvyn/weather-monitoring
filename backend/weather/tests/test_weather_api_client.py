@@ -1,9 +1,10 @@
 import json
 import os
 import unittest
-import requests
 from unittest.mock import patch
-from ..services.weather_api_client import WeatherAPIClient
+
+import requests
+from weather.services.weather_api_client import WeatherAPIClient
 
 
 class TestWeatherAPIClient(unittest.TestCase):

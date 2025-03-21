@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import WeatherData, WindData, WeatherCondition
-from django_celery_beat.models import PeriodicTask, IntervalSchedule
+
+from weather.models import WeatherCondition, WeatherData, WindData
 
 
 class WeatherDataAdmin(admin.ModelAdmin):

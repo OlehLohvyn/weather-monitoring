@@ -1,6 +1,7 @@
 import logging
-from .weather_api_client import WeatherAPIClient
-from ..models import WeatherData, WindData, WeatherCondition
+
+from weather.models import WeatherCondition, WeatherData, WindData
+from weather.services.weather_api_client import WeatherAPIClient
 
 
 class ForecastWeatherService:

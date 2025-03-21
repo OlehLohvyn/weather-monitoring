@@ -15,6 +15,7 @@ COPY . /app
 
 # Встановлюємо змінну середовища для Django
 ENV PYTHONPATH="/app"
+# ENV PYTHONPATH="/app:/app/backend"
 
 # Відкриваємо порт 8000
 EXPOSE 8000

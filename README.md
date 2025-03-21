@@ -1,3 +1,10 @@
+## Tests
+```sh
+docker exec -it <container id> coverage run manage.py test weather.tests
+coverage report
+```
+
+
 ```
 weather_monitoring_system/
 │── backend/                # Django (REST API)

@@ -1,11 +1,12 @@
-import unittest
+import copy
 import json
 import os
-import copy
+import unittest
 from unittest.mock import patch
+
 from django.test import TestCase
-from ..services.current_weather_service import CurrentWeatherService
-from ..models import WeatherData, WindData, WeatherCondition
+from weather.models import WeatherCondition, WeatherData, WindData
+from weather.services.current_weather_service import CurrentWeatherService
 
 
 class TestCurrentWeatherService(TestCase):

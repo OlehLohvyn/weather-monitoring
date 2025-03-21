@@ -1,5 +1,6 @@
-from django_celery_beat.models import PeriodicTask, IntervalSchedule
 import json
+
+from django_celery_beat.models import IntervalSchedule, PeriodicTask
 
 
 def setup_periodic_tasks():
