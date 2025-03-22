@@ -1,4 +1,4 @@
-from weather.models import WindData, WeatherCondition, WeatherData
+from weather.models import WeatherCondition, WeatherData, WindData
 
 
 class WeatherModelFactory:

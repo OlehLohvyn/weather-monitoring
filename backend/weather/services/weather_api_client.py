@@ -2,6 +2,7 @@ import logging
 
 import requests
 from django.conf import settings
+from weather.services.exceptions import WeatherAPIError
 
 logger = logging.getLogger(__name__)
 
@@ -18,30 +19,40 @@ class WeatherAPIClient:
     def __init__(self):
         self.api_key = settings.WEATHER_API_KEY
 
-    def fetch_data(self, endpoint: str, params: dict):
-        """Sends a request to WeatherAPI and returns the response."""
-
-        # Validate endpoint
-        if not endpoint or endpoint not in self.BASE_URLS:
-            return {"error": "Invalid or missing API endpoint"}
-
-        # Validate parameters
-        if not params or "q" not in params:
-            return {"error": "Missing required parameter(s): q"}
-
-        url = self.BASE_URLS[endpoint]
-        params = {"key": self.api_key, **params}  # Add API key
+    def fetch_data(self, endpoint: str, params: dict) -> dict:
+        """Public method to fetch data from WeatherAPI."""
+        url, full_params = self._prepare_request(endpoint, params)
 
         try:
-            response = requests.get(url, params=params)
+            response = requests.get(url, params=full_params)
             response.raise_for_status()
-            data = response.json()
-
-            if "error" in data:
-                logger.warning(f"WeatherAPI error: {data['error'].get('message', 'Unknown error')}")
-                return {"error": data["error"].get("message", "Unknown API error")}
-
-            return data
+            return self._handle_response(response)
         except requests.exceptions.RequestException as e:
-            logger.error(f"Request to WeatherAPI failed: {str(e)}")
-            return {"error": f"Request failed: {str(e)}"}
+            msg = f"Request failed: {str(e)}"
+            logger.error(f"Request to WeatherAPI failed: {msg}")
+            raise WeatherAPIError(msg)
+
+    def _prepare_request(self, endpoint: str, params: dict) -> tuple[str, dict]:
+        """Validate and build URL + params for the request."""
+        if not endpoint or endpoint not in self.BASE_URLS:
+            msg = "Invalid or missing API endpoint"
+            logger.warning(f"WeatherAPI error: {msg}")
+            raise WeatherAPIError(msg)
+
+        if not params or "q" not in params:
+            msg = "Missing required parameter(s): q"
+            logger.warning(f"WeatherAPI error: {msg}")
+            raise WeatherAPIError(msg)
+
+        url = self.BASE_URLS[endpoint]
+        full_params = {"key": self.api_key, **params}
+        return url, full_params
+
+    def _handle_response(self, response: requests.Response) -> dict:
+        """Validate and parse JSON response."""
+        data = response.json()
+        if "error" in data:
+            msg = data["error"].get("message", "Unknown API error")
+            logger.warning(f"WeatherAPI error: {msg}")
+            raise WeatherAPIError(msg)
+        return data
