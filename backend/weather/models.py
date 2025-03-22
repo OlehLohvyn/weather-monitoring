@@ -1,7 +1,11 @@
+"""Django models for storing weather data, wind information, and weather conditions."""
+
 from django.db import models
 
 
 class WeatherData(models.Model):
+    """Model representing overall weather data for a specific location and time."""
+
     timestamp = models.DateTimeField(auto_now_add=True)
     city = models.CharField(max_length=100, null=False, blank=False)
     country = models.CharField(max_length=100, null=False, blank=False)
@@ -15,30 +19,55 @@ class WeatherData(models.Model):
     precipitation = models.FloatField(help_text="Precipitation amount (mm)", null=True, blank=True, default=0.0)
     dew_point = models.FloatField(help_text="Dew point (°C)", null=True, blank=True)
 
-    wind = models.OneToOneField('WindData', on_delete=models.CASCADE, related_name='weather_data', null=False,
-                                                                                                        blank=False)
-    condition = models.OneToOneField('WeatherCondition', on_delete=models.CASCADE, related_name='weather_data',
-                                                                                                null=False, blank=False)
+    wind = models.OneToOneField(
+        'WindData',
+        on_delete=models.CASCADE,
+        related_name='weather_data',
+        null=False,
+        blank=False
+    )
+    condition = models.OneToOneField(
+        'WeatherCondition',
+        on_delete=models.CASCADE,
+        related_name='weather_data',
+        null=False,
+        blank=False
+    )
 
     def __str__(self):
         return f"{self.timestamp} - {self.city}: {self.temperature}°C"
 
 
 class WindData(models.Model):
+    """Model representing wind-related data."""
+
     wind_speed = models.FloatField(help_text="Wind speed (km/h)", null=False, blank=False)
     wind_gust = models.FloatField(help_text="Wind gusts (km/h)", null=True, blank=True)
-    wind_direction = models.CharField(max_length=10, help_text="Wind direction (ENE, N, SW, etc.)", null=False,
-                                                                                                            blank=False)
-    wind_degree = models.IntegerField(help_text="Wind direction in degrees (0° - North, 90° - East)", null=True,
-                                                                                                            blank=True)
+    wind_direction = models.CharField(
+        max_length=10,
+        help_text="Wind direction (ENE, N, SW, etc.)",
+        null=False,
+        blank=False
+    )
+    wind_degree = models.IntegerField(
+        help_text="Wind direction in degrees (0° - North, 90° - East)",
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return f"Wind: {self.wind_speed} km/h, {self.wind_direction}"
 
 
 class WeatherCondition(models.Model):
-    weather_condition = models.CharField(max_length=100, help_text="Weather description (Clear, Rain, Fog, etc.)",
-                                                                                             null=False, blank=False)
+    """Model representing weather conditions such as visibility, clouds, and UV index."""
+
+    weather_condition = models.CharField(
+        max_length=100,
+        help_text="Weather description (Clear, Rain, Fog, etc.)",
+        null=False,
+        blank=False
+    )
     weather_icon = models.URLField(help_text="URL of the weather condition icon", null=True, blank=True)
     cloudiness = models.IntegerField(help_text="Cloud cover (%)", null=True, blank=True)
     visibility = models.FloatField(help_text="Visibility (km)", null=False, blank=False)

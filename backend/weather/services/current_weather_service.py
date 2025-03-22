@@ -5,9 +5,6 @@ from weather.services.weather_factory import WeatherModelFactory
 class CurrentWeatherService(BaseWeatherService):
     """Service for getting current weather."""
 
-    def __init__(self):
-        super().__init__()
-
     def get_weather(self, city: str):
         params = {"key": self.api_client.api_key, "q": city, "aqi": "no"}
         data = self.api_client.fetch_data("current", params)

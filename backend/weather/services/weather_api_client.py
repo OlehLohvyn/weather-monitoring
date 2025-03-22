@@ -24,13 +24,13 @@ class WeatherAPIClient:
         url, full_params = self._prepare_request(endpoint, params)
 
         try:
-            response = requests.get(url, params=full_params)
+            response = requests.get(url, params=full_params, timeout=5)
             response.raise_for_status()
             return self._handle_response(response)
         except requests.exceptions.RequestException as e:
             msg = f"Request failed: {str(e)}"
             logger.error(f"Request to WeatherAPI failed: {msg}")
-            raise WeatherAPIError(msg)
+            raise WeatherAPIError(msg) from e
 
     def _prepare_request(self, endpoint: str, params: dict) -> tuple[str, dict]:
         """Validate and build URL + params for the request."""

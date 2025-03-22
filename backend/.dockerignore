@@ -29,3 +29,9 @@ build/
 
 .env
 .env.*
+
+# Ignore lint tools
+pylint.log
+lint.bat
+Makefile
+.pylintrc

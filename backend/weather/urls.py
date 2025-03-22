@@ -1,5 +1,6 @@
-from django.urls import path
+"""URL configuration for weather-related API endpoints."""
 
+from django.urls import path
 from .views import WeatherDataListCreate
 
 urlpatterns = [

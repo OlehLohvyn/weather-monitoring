@@ -1,3 +1,5 @@
+"""Django management command to wait for the database to become available."""
+
 import time
 
 from django.core.management.base import BaseCommand
@@ -6,9 +8,16 @@ from django.db.utils import OperationalError
 
 
 class Command(BaseCommand):
+    """Custom Django command that waits for the database to be ready."""
+
     help = "Wait for database to be ready before continuing."
 
     def handle(self, *args, **options):
+        """
+        Entry point for the command execution.
+
+        Repeatedly attempts to connect to the database until successful.
+        """
         self.stdout.write("Waiting for database...")
         db_conn = None
         while not db_conn:

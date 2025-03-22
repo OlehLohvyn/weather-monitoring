@@ -1,3 +1,5 @@
+"""Admin configuration for managing weather-related models in Django admin."""
+
 from django.contrib import admin
 from weather.models import WeatherCondition, WeatherData, WindData
 
