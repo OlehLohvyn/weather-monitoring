@@ -1,0 +1,31 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.venv/
+env/
+venv/
+
+# IDE
+*.swp
+*.swo
+*.log
+.vscode/
+.idea/
+
+# pytest
+.pytest_cache/
+.coverage
+
+# Docker
+Dockerfile
+.dockerignore
+
+dist/
+build/
+.eggs/
+*.egg-info/
+
+.env
+.env.*

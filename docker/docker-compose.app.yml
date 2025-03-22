@@ -1,6 +1,8 @@
 services:
   web-app:
-    build: backend
+    build:
+      context: ../backend  # правильний шлях до backend
+
     ports:
       - "8000:8000"
     depends_on:

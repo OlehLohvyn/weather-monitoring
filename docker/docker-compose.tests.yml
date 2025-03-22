@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  test-runner:
+    build:
+      context: ../backend
+    container_name: test-runner
+    working_dir: /backend
+    command: >
+      sh -c "pytest -v"
+    volumes:
+      - ../backend:/backend
+    env_file:
+      - ../.env
+    depends_on:
+      database:
+        condition: service_healthy

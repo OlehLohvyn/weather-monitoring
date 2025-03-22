@@ -26,6 +26,10 @@ services:
       file: docker/docker-compose.celery.yml
       service: celery-beat
 
+  test-runner:
+    extends:
+      file: docker/docker-compose.tests.yml
+      service: test-runner
 
 volumes:
   pg_data:

@@ -1,6 +1,7 @@
 services:
   celery-worker:
-    build: backend
+    build:
+      context: ../backend
     command: celery -A app.celery_app worker --loglevel=info
     depends_on:
       database:
@@ -13,7 +14,8 @@ services:
       - ../.env
 
   celery-beat:
-    build: backend
+    build:
+      context: ../backend
     command: >
       sh -c "
             python manage.py wait_for_db &&
