@@ -1,95 +1,135 @@
-# 🚀 Weather Monitoring System — Docker Setup Guide
+# Weather Monitoring System — Docker Setup Guide
 
-Цей документ допоможе запустити систему моніторингу погоди за допомогою Docker.
-
----
-
-## 📦 Вимоги перед запуском
-
-Перед запуском переконайся, що на твоїй машині встановлено:
-
--
-
-> ⚠️ Якщо використовуєш Windows, рекомендовано запускати в PowerShell або WSL
+This document explains how to run the Weather Monitoring System using Docker.
 
 ---
 
-## 🧱 Docker-компоненти
+## Requirements Before Starting
 
-- `web`: Django-бекенд (порт `8000`)
-- `db`: SQLite/volume (або PostgreSQL, якщо потрібно)
-- `celery`: для асинхронних задач (обробка API-запитів)
-- `celery-beat`: періодичне оновлення погоди
+Make sure the following tools are installed on your machine:
+
+- Docker
+- Docker Compose
+- Git
+- Python 3.10+ (for local development)
+
+> If you're using Windows, it's recommended to run commands in PowerShell or WSL.
 
 ---
 
-## ⚙️ Запуск у Docker
+## Required Environment Variables
 
-### 1. Клонувати репозиторій:
+Create a `.env` file in the **root of the repository** (next to `docker-compose.yml`) with the following variables:
+
+```env
+# Django
+SECRET_KEY=your_secret_key
+DJANGO_SETTINGS_MODULE=app.settings
+
+# Weather API
+WEATHER_API_KEY=your_api_key
+DEFAULT_CITY=Boryspil
+
+# Celery
+CELERY_BROKER_URL=redis://redis:6379/0
+CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+# Database (PostgreSQL or other)
+DB_HOST=db
+DB_NAME=app_db
+DB_USER=app_user
+DB_PASS=your_password
+DB_PORT=5432
+
+# Django superuser (auto-creation)
+DJANGO_SUPERUSER_USERNAME=admin
+DJANGO_SUPERUSER_EMAIL=admin@example.com
+DJANGO_SUPERUSER_PASSWORD=adminpassword
+```
+
+This file is ignored by Git, so you must create it manually on each machine or CI/CD environment.
+
+---
+
+## Docker Components
+
+- `web`: Django backend (port `8000`)
+- `db`: SQLite with volume (or PostgreSQL if configured)
+- `celery`: handles async tasks (e.g., API calls)
+- `celery-beat`: runs scheduled weather updates
+
+---
+
+## How to Run the Project in Docker
+
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-name/weather_monitoring_system.git
+git clone git@github.com:OlehLohvyn/weather-monitoring.git
 cd weather_monitoring_system/backend
 ```
 
-### 2. Побудувати образи
+### 2. Build Docker Images
 
 ```bash
 docker compose build
 ```
 
-### 3. Запустити сервіс
+### 3. Start Services
 
 ```bash
 docker compose up
 ```
 
-## 🧪 Перевірка
+---
 
-- Перейди в браузері на `http://localhost:8000/admin/`
-- Увійди з суперкористувачем
-- Перевір доступність API: `http://localhost:8000/weather/`
+## Testing the System
+
+- Open `http://localhost:8000/admin/` in your browser
+- Log in with the superuser credentials
+- Check the weather API at: `http://localhost:8000/weather/`
 
 ---
 
-## 🛠 Команди розробника
+## Developer Commands (Local Only)
 
-### Перевірка коду (тільки локально, не в Docker):
+These commands should be run outside Docker, in your virtual environment.
 
 ```bash
-# лінтинг
+# Code linting
 .\lint.bat
 
-# юніт-тести
+# Run tests
 pytest
 ```
 
 ---
 
-## 📁 Структура проекту
+## Project Structure
 
 ```
 weather_monitoring_system/
 ├── backend/
 │   ├── app/                # Django settings
-│   ├── weather/            # Основна логіка додатку
-│   ├── tests/              # Юніт-тести
-│   ├── Dockerfile          # Docker-образ
-│   ├── docker-compose.yml  # Сервіси
+│   ├── weather/            # Core business logic
+│   ├── tests/              # Unit tests
+│   ├── Dockerfile          # Docker image definition
+│   ├── docker-compose.yml  # Docker services configuration
 │   └── manage.py
 ```
 
 ---
 
-## ❓ Поширені проблеми
+## Common Issues
 
-- **"Address already in use"**: порт 8000 вже зайнятий — зупини процес або зміни порт у `docker-compose.yml`
-- **Celery не запускається**: перевір `.env`, налаштування брокера та залежності
-- **Немає прав**: якщо WSL — запускай команду з `sudo`
+- **"Address already in use"**: Port 8000 is busy — stop the running service or change the port in `docker-compose.yml`
+- **Celery won't start**: Check the `.env` file, broker settings, and dependencies
+- **Permission denied**: If using WSL, try running with `sudo`
 
 ---
 
-## ✉️ Зв'язок
+## Contact
 
-Проєкт створено для демонстрації навичок Python-розробника. Усі пропозиції чи питання — в issues або напряму 🙂
+This project was created to demonstrate Python backend development skills.  
+For suggestions or issues, open an issue or contact the author directly.
 
