@@ -29,5 +29,14 @@ services:
       file: docker/docker-compose.tests.yml
       service: test-runner
 
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    networks:
+      - default
+
+
 volumes:
   pg_data:

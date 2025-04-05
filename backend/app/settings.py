@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'django_celery_beat',
+    'corsheaders',
 
     'weather',
 ]
@@ -131,6 +132,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware'] + MIDDLEWARE
+CORS_ALLOW_ALL_ORIGINS = True  # для простоти, або CORS_ALLOWED_ORIGINS = [...]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
