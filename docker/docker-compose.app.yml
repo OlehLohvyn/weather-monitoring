@@ -1,7 +1,7 @@
 services:
   web-app:
     build:
-      context: ../backend  # правильний шлях до backend
+      context: ../backend
 
     ports:
       - "8000:8000"
@@ -17,5 +17,5 @@ services:
             python manage.py wait_for_db &&
             python manage.py makemigrations &&
             python manage.py migrate &&
-            python manage.py createsuperuser --noinput &&
+            python manage.py create_initial_superuser &&
             python manage.py runserver 0.0.0.0:8000"

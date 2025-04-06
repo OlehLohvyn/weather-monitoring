@@ -1,8 +1,9 @@
 """URL configuration for weather-related API endpoints."""
 
-from django.urls import path
-from .views import WeatherDataListCreate
+from rest_framework.routers import DefaultRouter
+from .views import WeatherDataViewSet
 
-urlpatterns = [
-    path('weather/', WeatherDataListCreate.as_view(), name='weather-list'),
-]
+router = DefaultRouter()
+router.register(r'weather', WeatherDataViewSet, basename='weather')
+
+urlpatterns = router.urls
